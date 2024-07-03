@@ -1,0 +1,24 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Property {
+  id           String      @id @default(cuid())
+  property_name String
+  locality     Locality @relation(fields: [localityId], references: [id])
+  localityId   String
+  owner_name   String
+}
+
+model Locality {
+  id         String        @id @default(cuid())
+  name       String
+  properties Property[]
+}
